@@ -9,12 +9,15 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
+		"@babel/plugin-transform-class-properties": "^7.27.1",
 		"@tanstack/react-query": "^4.42.0",
+		"@tanstack/vue-query": "^5.91.2",
 		"axios": "^1.13.2",
 		"core-js": "^3.8.3",
 		"vue": "^3.2.13"
 	},
 	"devDependencies": {
+		"@babel/plugin-transform-private-methods": "^7.27.1",
 		"@typescript-eslint/eslint-plugin": "^5.4.0",
 		"@typescript-eslint/parser": "^5.4.0",
 		"@vue/cli-plugin-babel": "~5.0.0",
