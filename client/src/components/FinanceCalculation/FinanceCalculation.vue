@@ -54,6 +54,12 @@ export default defineComponent({
 
 			console.log("state object: ", this.formInqQuote);
 		},
+		onApply() {
+			console.log("[onApply]");
+		},
+		onSave() {
+			console.log("[onSave]");
+		},
 	},
 });
 </script>
@@ -66,10 +72,12 @@ export default defineComponent({
 		<FinanceQuote
 			:formInqQuote="formInqQuote"
 			:handleFormDataChange="handleFormDataChange"
+			:onApply="onApply"
 		/>
 		<FinanceResult
 			:formInqQuote="formInqQuote"
 			:handleFormDataChange="handleFormDataChange"
+			:onSave="onSave"
 		/>
 	</div>
 </template>

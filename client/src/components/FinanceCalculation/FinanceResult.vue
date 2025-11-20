@@ -15,13 +15,12 @@ export default defineComponent({
 			type: Function as PropType<(e: Event) => void>,
 			required: false,
 		},
-	},
-	methods: {
-		handleClickSave(e: Event) {
-			e.preventDefault();
-			console.log("[handleClickSave]");
+		onSave: {
+			type: Function as PropType<(e: Event) => void>,
+			required: false,
 		},
 	},
+	methods: {},
 });
 </script>
 
@@ -90,7 +89,7 @@ export default defineComponent({
 				<div class="buttonArea">
 					<button
 						class="button is-black is-small"
-						@click="handleClickSave"
+						@click="onSave"
 					>
 						<span class="icon is-small">
 							<i class="fas fa-save"></i>

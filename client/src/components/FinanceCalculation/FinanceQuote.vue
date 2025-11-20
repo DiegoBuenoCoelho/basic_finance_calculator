@@ -7,7 +7,6 @@ import { Quote } from "@/types/Quote";
 export default defineComponent({
 	name: "FinanceQuote",
 	props: {
-		// formInqQuote: Object as PropType<Quote>,
 		formInqQuote: {
 			type: Object as PropType<Quote>,
 			required: true,
@@ -16,18 +15,17 @@ export default defineComponent({
 			type: Function as PropType<(e: Event) => void>,
 			required: false,
 		},
+		onApply: {
+			type: Function as PropType<(e: Event) => void>,
+			required: true,
+		},
 	},
 	data(props) {
 		// formInqQuote = props.formInqQuote;
 		// return { formInqQuote };
 		return {};
 	},
-	methods: {
-		handleClickApply(e: Event) {
-			e.preventDefault();
-			console.log("[handleClickApply]");
-		},
-	},
+	methods: {},
 });
 </script>
 
@@ -147,7 +145,7 @@ export default defineComponent({
 				<div class="buttonArea">
 					<button
 						class="button is-black is-small"
-						@click="handleClickApply"
+						@click="onApply"
 					>
 						<span class="icon is-small">
 							<i class="fas fa-check"></i>
