@@ -54,3 +54,5 @@ This project should take a few hours, not days. Focus on demonstrating your skil
 -   Cleaning up of initial template and code
 -   The start of coding
 -   Using standard scss for general layout
+-   Adding Server folder (NodeJS, TS, Express)
+-   Splitting the git repository into /client and /server
