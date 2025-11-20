@@ -1,0 +1,20 @@
+.TopHeader {
+	position: relative;
+	margin: 0em;
+	padding: 0em;
+	background-color: #1a1613;
+	height: 3em;
+
+	display: flex;
+	flex-direction: row;
+	text-align: left;
+	align-items: center;
+	align-content: center;
+	justify-content: flex-start;
+
+	img.topLogo {
+		height: 92%;
+		margin-left: 2em;
+		margin-top: 0.1em;
+	}
+}
