@@ -24,5 +24,74 @@
 		flex-direction: row;
 		justify-content: center;
 		text-align: center;
+
+		&.quoteFieldsArea {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+
+			.quoteFields {
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				height: 2em;
+				line-height: 2em;
+
+				flex-basis: 1;
+
+				> div {
+					width: 50%;
+					display: flex;
+					flex-direction: row;
+				}
+				.property {
+					justify-content: flex-start;
+					padding-left: 1em;
+				}
+				.value {
+					justify-content: flex-end;
+					padding-right: 1em;
+					input {
+						width: 60%;
+						background-color: #f8fcff66;
+						color: navy;
+						text-align: right;
+						border-color: #cfcfcf;
+
+						&.quoteName {
+							width: 80%;
+						}
+					}
+					span {
+						padding-right: 0.25em;
+					}
+				}
+
+				&:nth-child(even) {
+					background-color: #f6f6f630;
+				}
+			}
+
+			.buttonArea {
+				width: 100%;
+				flex-basis: 1;
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-end;
+				padding-top: 0.25em;
+				padding-right: 1em;
+				button {
+					width: 7em;
+					padding-left: 2em;
+					&:hover {
+						color: greenyellow;
+					}
+
+					.icon {
+						padding-right: 1.5em;
+					}
+				}
+			}
+		}
 	}
 }

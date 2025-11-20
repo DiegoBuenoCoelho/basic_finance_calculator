@@ -1,51 +1,31 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import "./FinanceQuote.scss";
 import "../../assets/scss/panel.scss";
 import { Quote } from "@/types/Quote";
 
 export default defineComponent({
 	name: "FinanceQuote",
-	data() {
-		let formInqQuote: Quote = {
-			inq_cost: 0.0,
-			inq_profit: 0,
-			inq_sellingprice: 0,
-			inq_term: 0,
-			inq_rate: 0,
-			inq_outofpocket: 0,
-			inq_taxrate: 0,
-			inq_timestamp: "",
-			res_taxes: 0,
-			res_baseloanamount: 0,
-			res_interest: 0,
-			res_totalloanamount: 0,
-			res_monthlypayment: 0,
-			res_outofpocket: 0,
-			res_quotename: "",
-		};
-
-		return { formInqQuote };
+	props: {
+		// formInqQuote: Object as PropType<Quote>,
+		formInqQuote: {
+			type: Object as PropType<Quote>,
+			required: true,
+		},
+		handleFormDataChange: {
+			type: Function as PropType<(e: Event) => void>,
+			required: false,
+		},
 	},
-	props: {},
+	data(props) {
+		// formInqQuote = props.formInqQuote;
+		// return { formInqQuote };
+		return {};
+	},
 	methods: {
 		handleClickApply(e: Event) {
 			e.preventDefault();
 			console.log("[handleClickApply]");
-		},
-		handleFormDataChange(event: Event) {
-			event.preventDefault();
-			const target = event.target as HTMLInputElement;
-			const thisProperty = target.name;
-			const thisValue = target.value;
-			console.log(target.name, target.value);
-
-			this.formInqQuote = {
-				...this.formInqQuote,
-				[thisProperty]: Number(thisValue),
-			};
-
-			console.log("state object: ", this.formInqQuote);
 		},
 	},
 });
@@ -70,11 +50,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -88,11 +65,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -106,11 +80,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -124,11 +95,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -142,11 +110,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -160,11 +125,8 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
@@ -178,18 +140,18 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
-							class="input is-small is-info"
+							class="input is-small"
 						/>
-						<span class="icon is-small is-left">
-							<i class="fas fa-evelope"></i>
-						</span>
 					</div>
 				</div>
 				<div class="buttonArea">
 					<button
-						class="button is-link is-small"
+						class="button is-black is-small"
 						@click="handleClickApply"
 					>
+						<span class="icon is-small">
+							<i class="fas fa-check"></i>
+						</span>
 						Apply
 					</button>
 				</div>
