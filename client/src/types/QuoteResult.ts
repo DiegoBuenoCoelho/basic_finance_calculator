@@ -3,7 +3,7 @@ export type QuoteResult = {
 	baseLoanAmount: number;
 	interest: number;
 	totalLoanAmount: BigInteger;
-	payment: number;
+	monthlyPayment: number;
 	outOfPocket: number;
 	name: string;
 };
