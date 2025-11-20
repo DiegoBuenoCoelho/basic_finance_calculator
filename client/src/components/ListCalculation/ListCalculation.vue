@@ -1,25 +1,39 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import "./ListCalculation.scss";
 import "../../assets/scss/panel.scss";
-import getData from "@/hooks/useQuotes";
+import { serverURL } from "@/config";
+import axios from "axios";
+import { Quote } from "@/types/Quote";
+import SavedQuote from "./SavedQuote.vue";
 
 export default defineComponent({
 	name: "ListCalculation",
-	components: {},
+	components: {
+		SavedQuote,
+	},
 	props: {},
+	data() {
+		const endpoint = `${serverURL}/quotes`;
+		// let arQuotes: Array<Quote> = ref([]);
+		let arQuotes = ref([]);
+		return { endpoint, arQuotes };
+	},
 	methods: {
-		getQuotesData: () => {
+		getQuotesData: async function () {
+			const endpoint = `${serverURL}/quotes`;
 			console.log("[ListCalculation setup]");
-			const data = getData();
-			console.log({ data });
+			try {
+				const { data } = await axios.get(endpoint);
+				console.log(data);
+				this.arQuotes = data.quotes;
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
-	setup() {
-		// let { data, isLoading, error } = useQuote();
-		// console.warn(isLoading, error, data);
-		// const arQuotes = data;
-		// getQuotesData();
+	mounted() {
+		this.getQuotesData();
 	},
 });
 </script>
@@ -31,7 +45,13 @@ export default defineComponent({
 	>
 		<div class="panel">
 			<div class="title">Saved Quotes</div>
-			<div class="content">... list ...</div>
+			<div class="content savedQuotes">
+				<SavedQuote
+					v-for="(quote, index) in arQuotes"
+					:key="index"
+					:quote="quote"
+				/>
+			</div>
 		</div>
 	</div>
 </template>

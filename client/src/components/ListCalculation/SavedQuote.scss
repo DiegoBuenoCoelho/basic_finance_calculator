@@ -1,0 +1,16 @@
+.savedQuotes {
+	display: flex;
+	flex-direction: column !important;
+	align-items: center;
+
+	.SavedQuote {
+		color: black;
+		font-size: 2em;
+		height: 4em;
+
+		display: flex;
+		flex-direction: column;
+		width: 96%;
+		border-bottom: 1px solid black;
+	}
+}

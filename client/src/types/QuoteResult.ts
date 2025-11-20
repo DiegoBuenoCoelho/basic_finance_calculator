@@ -5,5 +5,5 @@ export type QuoteResult = {
 	totalLoanAmount: BigInteger;
 	monthlyPayment: number;
 	outOfPocket: number;
-	name: string;
+	res_quotename: string;
 };

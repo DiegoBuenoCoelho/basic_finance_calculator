@@ -1,30 +1,17 @@
 import { serverURL } from "@/config";
 import { Quote } from "@/types/Quote";
-import { useQuery } from "@tanstack/vue-query";
 import axios, { AxiosResponse } from "axios";
 
-const useQuote = () => {
+export const useQuotes = () => {
 	const endpoint = `${serverURL}/quotes`;
 
-	// const getData = async (): Promise<AxiosResponse<Quote>> => {
-	// 	const data = await axios.get(endpoint);
-	// 	return data;
-	// };
+	const getQuotes = async () => {
+		const response = await axios.get(endpoint); //then((response) => (this.info = response));
 
-	// const { data, isLoading, error } = useQuery({
-	// 	queryKey: ["getQuotes"],
-	// 	queryFn: getData,
-	// });
+		return response;
+	};
 
-	const fetcher = async (): Promise<Quote> =>
-		await fetch(endpoint).then((response) => response.json());
-
-	const { isError, isFetching, isLoading, data, error } = useQuery({
-		queryKey: ["getQuotes"],
-		queryFn: () => fetcher(),
-	});
-
-	return { isError, isFetching, isLoading, data, error };
+	return {
+		getQuotes,
+	};
 };
-
-export default useQuote;
