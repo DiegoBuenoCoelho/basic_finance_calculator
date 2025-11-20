@@ -1,0 +1,20 @@
+.panel {
+	background-color: white;
+	border: 1px solid #cbd5e1;
+	border-radius: 0.5em;
+
+	width: 100%;
+
+	> div {
+		padding: 0.5em;
+	}
+	.title {
+		background-color: #f8fafc;
+		font-size: large;
+		font-weight: 600;
+		text-align: left;
+	}
+	.content {
+		padding: 0.5em;
+	}
+}

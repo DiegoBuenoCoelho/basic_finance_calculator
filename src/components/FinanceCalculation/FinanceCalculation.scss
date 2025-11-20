@@ -1,0 +1,15 @@
+.FinanceCalculation {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	flex-wrap: wrap;
+
+	padding: 0.5em;
+	padding-right: 0.6em;
+	gap: 0.25;
+
+	> div {
+		width: 49%;
+	}
+}
