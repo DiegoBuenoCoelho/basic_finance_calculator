@@ -3,14 +3,78 @@
 	flex-direction: column !important;
 	align-items: center;
 
+	padding: 1em 2em !important;
+
 	.SavedQuote {
 		color: black;
-		font-size: 2em;
-		height: 4em;
+		font-size: 1em;
 
 		display: flex;
-		flex-direction: column;
-		width: 96%;
+		flex-direction: row;
+		flex-grow: 1;
+		width: 94%;
+
 		border-bottom: 1px solid black;
+		padding: 1em 0em;
+
+		.savedQuoteData {
+			width: 90%;
+			.quoteName {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				font-weight: 600;
+				font-size: 1.1em;
+
+				.dateCreated {
+					color: gray;
+					font-weight: 200;
+					font-size: small;
+					margin-right: 2em;
+					padding-top: 0.25em;
+				}
+			}
+
+			.quoteInfos {
+				display: flex;
+				flex-direction: row;
+				align-items: flex-start;
+				justify-content: flex-start;
+				gap: 1em;
+
+				.quoteItem {
+					border-right: 1px dotted lightblue;
+					padding: 0em 1em;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 18%;
+					padding: 0.25em;
+
+					&:hover {
+						background-color: aliceblue;
+						// cursor: pointer;
+					}
+
+					> div {
+						display: block;
+						text-align: center;
+					}
+					.quoteItemName {
+					}
+					.quoteItemValue {
+						color: darkgreen;
+					}
+				}
+			}
+		}
+
+		.savedQuoteActions {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			width: 10%;
+		}
 	}
 }
