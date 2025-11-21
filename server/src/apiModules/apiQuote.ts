@@ -1,5 +1,6 @@
 import { Application, Request, Response } from "express";
 import { getQuotes, createQuote, deleteQuote } from "../db/quotes";
+import BLQuote from "../businessLogic/BLQuote";
 
 const apiQuote = (app: Application) => {
 	app.get("/quotes", async (req: Request, res: Response) => {
@@ -12,7 +13,7 @@ const apiQuote = (app: Application) => {
 		});
 	});
 
-	app.put("/quote", async (req: Request, res: Response) => {
+	app.post("/quote", async (req: Request, res: Response) => {
 		const { data } = req.body;
 		const newQuote: QuoteComplete = data;
 		// console.log("PUT with TS", { newQuote });
@@ -32,6 +33,20 @@ const apiQuote = (app: Application) => {
 
 		res.status(200).send({
 			...deletedQuote,
+		});
+	});
+
+	//---------------------------------
+
+	app.post("/quoteCalc", async (req: Request, res: Response) => {
+		const { data } = req.body;
+		const currentQuote: QuoteComplete = data;
+
+		const quoteCalculated = BLQuote().calcQuote(currentQuote);
+		console.log("CALC with TS", { quoteCalculated });
+
+		res.status(200).send({
+			...quoteCalculated,
 		});
 	});
 };
