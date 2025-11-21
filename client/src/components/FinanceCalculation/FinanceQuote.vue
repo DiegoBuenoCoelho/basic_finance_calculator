@@ -2,7 +2,7 @@
 import { computed, defineComponent, PropType } from "vue";
 import "./FinanceQuote.scss";
 import "../../assets/scss/panel.scss";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
 import { formatCurrency } from "@/utils/formatters";
 
 export default defineComponent({

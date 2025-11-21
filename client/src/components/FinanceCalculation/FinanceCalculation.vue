@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent, PropType, defineEmits } from "vue";
+import { defineComponent, PropType, defineEmits, ref, getCurrentInstance } from "vue";
 import "./FinanceCalculation.scss";
 import FinanceQuote from "./FinanceQuote.vue";
 import FinanceResult from "./FinanceResult.vue";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
 import { serverURL } from "@/config";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -14,7 +14,12 @@ export default defineComponent({
 		FinanceQuote,
 		FinanceResult,
 	},
-	props: {},
+	props: {
+		getQuotesData: {
+			type: Function as PropType<(e?: Event) => void>,
+			required: true,
+		},
+	},
 	data() {
 		let formInqQuote: Quote = {
 			id: null,
@@ -37,34 +42,8 @@ export default defineComponent({
 
 		return { formInqQuote };
 	},
-	emits: ["updateListSavedQuotes"],
 
 	methods: {
-		updateValue() {
-			this.$emit("updateListSavedQuotes");
-		},
-
-		restoreFormInput() {
-			this.formInqQuote = {
-				id: null,
-				inq_cost: 0.0,
-				inq_profit: 0,
-				inq_sellingprice: 0,
-				inq_term: 0,
-				inq_rate: 0,
-				inq_outofpocket: 0,
-				inq_taxrate: 0,
-				inq_timestamp: "",
-				res_taxes: 0,
-				res_baseloanamount: 0,
-				res_interest: 0,
-				res_totalloanamount: 0,
-				res_monthlypayment: 0,
-				res_outofpocket: 0,
-				res_quotename: "",
-			};
-		},
-
 		handleFormDataChange(event: Event) {
 			event.preventDefault();
 			const target = event.target as HTMLInputElement;
@@ -106,15 +85,6 @@ export default defineComponent({
 					};
 					break;
 			}
-
-			// } else {
-			// 	this.formInqQuote = {
-			// 		...this.formInqQuote,
-			// 		[thisProperty]: Number(thisValue),
-			// 	};
-			// }
-
-			// console.log("state object: ", this.formInqQuote);
 		},
 
 		async onApply(e: Event) {
@@ -157,16 +127,47 @@ export default defineComponent({
 				throw Error(`FORM|Invalid value for field [${field}]`);
 			}
 		},
+	},
+	setup(props, ctx) {
+		const inst = getCurrentInstance();
 
-		onSave(e: Event) {
+		function restoreFormInput() {
+			if (inst && (inst as any).data) {
+				(inst as any).data.formInqQuote = {
+					id: null,
+					inq_cost: 0.0,
+					inq_profit: 0,
+					inq_sellingprice: 0,
+					inq_term: 0,
+					inq_rate: 0,
+					inq_outofpocket: 0,
+					inq_taxrate: 0,
+					inq_timestamp: "",
+					res_taxes: 0,
+					res_baseloanamount: 0,
+					res_interest: 0,
+					res_totalloanamount: 0,
+					res_monthlypayment: 0,
+					res_outofpocket: 0,
+					res_quotename: "",
+				};
+			}
+		}
+
+		function onSave(e: Event) {
 			e.preventDefault();
-			console.log("[onSave]", this.formInqQuote);
+			console.log("[onSave]", (inst as any)?.data?.formInqQuote);
 
 			try {
-				this.validateForm();
-				this.saveQuoteData();
-				if (typeof (this as any).reloadSavedQuotes === "function") {
-					(this as any).reloadSavedQuotes();
+				const proxy = inst?.proxy as any;
+				if (proxy && typeof proxy.validateForm === "function") {
+					proxy.validateForm();
+				}
+				if (proxy && typeof proxy.saveQuoteData === "function") {
+					proxy.saveQuoteData();
+				}
+				if (proxy && typeof proxy.reloadSavedQuotes === "function") {
+					proxy.reloadSavedQuotes();
 				}
 			} catch (error: any) {
 				const errorType = error.message?.split("|")[0];
@@ -185,13 +186,13 @@ export default defineComponent({
 					});
 				}
 			}
-		},
+		}
 
-		async saveQuoteData() {
+		async function saveQuoteData() {
 			const endpoint = `${serverURL}/quote`;
 			console.log("[saveQuoteData ]");
 			try {
-				const thisQuote = this.formInqQuote;
+				const thisQuote = inst ? (inst as any).data.formInqQuote : null;
 				const { data } = await axios.post(endpoint, { data: thisQuote });
 				console.log("put Executed", data);
 
@@ -201,12 +202,19 @@ export default defineComponent({
 					icon: "success",
 				});
 
-				this.updateValue();
-				this.restoreFormInput();
+				props.getQuotesData();
+				restoreFormInput();
 			} catch (error) {
 				console.error(error);
 			}
-		},
+		}
+
+		// expose functions to the template / component instance
+		return {
+			onSave,
+			saveQuoteData,
+			restoreFormInput,
+		};
 	},
 });
 </script>

@@ -3,7 +3,9 @@ import { defineComponent, ref } from "vue";
 import "./FinanceCalculator.scss";
 import FinanceCalculation from "./FinanceCalculation/FinanceCalculation.vue";
 import ListCalculation from "./ListCalculation/ListCalculation.vue";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
+import { serverURL } from "@/config";
+import axios from "axios";
 
 export default defineComponent({
 	name: "FinanceCalculator",
@@ -13,23 +15,30 @@ export default defineComponent({
 	},
 	props: {},
 	data() {
-		let boReload = false;
-
-		return { boReload };
+		const endpoint = `${serverURL}`;
+		let arQuotes = ref([]);
+		return { endpoint, arQuotes };
 	},
 
 	methods: {
-		updateListSavedQuotes() {
-			// assert the ref has the expected method to avoid 'unknown' type errors
-			const child = this.$refs.childRef as { getQuotesData?: () => void } | undefined;
-			child?.getQuotesData?.();
-			// setTimeout(() => {
-			// 	this.boReload = false;
-			// }, 500);
+		getQuotesData: async function () {
+			const myURL = `${this.endpoint}/quotes`;
+			console.log("[ListCalculation setup]");
+			try {
+				const { data } = await axios.get(myURL);
+				console.log(data);
+				this.arQuotes = data.quotes;
+			} catch (error) {
+				console.error(error);
+			}
 		},
+
 		onClickViewQuote(thisQuote: Quote) {
 			console.log("[onClickViewQuote]");
 		},
+	},
+	mounted() {
+		this.getQuotesData();
 	},
 });
 </script>
@@ -39,10 +48,11 @@ export default defineComponent({
 		class="FinanceCalculator"
 		:class="{}"
 	>
-		<FinanceCalculation :updateListSavedQuotes="updateListSavedQuotes" />
+		<FinanceCalculation :getQuotesData="getQuotesData" />
 		<ListCalculation
-			ref="childRef"
-			:onClickViewQuote="(e: any) => onClickViewQuote(e as Quote)"
+			:arQuotes="arQuotes"
+			:getQuotesData="getQuotesData"
+			:onClickViewQuote="onClickViewQuote"
 		/>
 	</div>
 </template>

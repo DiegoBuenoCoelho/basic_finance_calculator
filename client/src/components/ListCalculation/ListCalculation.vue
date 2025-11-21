@@ -4,7 +4,7 @@ import "./ListCalculation.scss";
 import "../../assets/scss/panel.scss";
 import { serverURL } from "@/config";
 import axios from "axios";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
 import SavedQuote from "./SavedQuote.vue";
 
 export default defineComponent({
@@ -13,49 +13,18 @@ export default defineComponent({
 		SavedQuote,
 	},
 	props: {
-		// boReload: {
-		// 	type: Boolean,
-		// 	required: true,
-		// },
+		arQuotes: {
+			type: Array as PropType<Quote[]>,
+			required: true,
+		},
 		onClickViewQuote: {
+			type: Function as PropType<(thisQuote: Quote) => void>,
+			required: true,
+		},
+		getQuotesData: {
 			type: Function as PropType<(e: Event) => void>,
 			required: true,
 		},
-	},
-	data() {
-		const endpoint = `${serverURL}/quotes`;
-		let arQuotes = ref([]);
-
-		return { endpoint, arQuotes };
-	},
-	methods: {
-		getQuotesData: async function () {
-			const endpoint = `${serverURL}/quotes`;
-			console.log("[ListCalculation setup]");
-			try {
-				const { data } = await axios.get(endpoint);
-				console.log(data);
-				this.arQuotes = data.quotes;
-			} catch (error) {
-				console.error(error);
-			}
-		},
-		// onDelete: async function (myQuote: Quote) {
-		// 	console.log("[handleClickDelete]");
-
-		// 	const endpoint = `${serverURL}/quote`;
-		// 	console.log("[saveQuoteData ]");
-		// 	try {
-		// 		const quoteId = myQuote.id;
-		// 		const { data } = await axios.delete(endpoint, { data: { id: quoteId } });
-		// 		console.log("delete Executed", data);
-		// 	} catch (error) {
-		// 		console.error(error);
-		// 	}
-		// },
-	},
-	mounted() {
-		this.getQuotesData();
 	},
 });
 </script>
@@ -83,6 +52,7 @@ export default defineComponent({
 					:key="index"
 					:quote="quote"
 					:onClickViewQuote="onClickViewQuote"
+					:getQuotesData="getQuotesData"
 				/>
 			</div>
 		</div>

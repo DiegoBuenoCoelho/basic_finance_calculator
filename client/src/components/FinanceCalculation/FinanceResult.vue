@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import "./FinanceResult.scss";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
 
 export default defineComponent({
 	name: "FinanceResult",

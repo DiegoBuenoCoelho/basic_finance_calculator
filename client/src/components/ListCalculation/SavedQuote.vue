@@ -1,15 +1,25 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import "./SavedQuote.scss";
-import { Quote } from "@/types/Quote";
+import { Quote } from "@/interfaces/Quote";
 import { formatCurrency, formatDate } from "@/utils/formatters";
 import { serverURL } from "@/config";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default defineComponent({
 	name: "SavedQuote",
 	components: {},
-	props: ["quote"],
+	props: {
+		quote: {
+			type: Object as PropType<Quote>,
+			required: true,
+		},
+		getQuotesData: {
+			type: Function as PropType<(e: Event) => void>,
+			required: true,
+		},
+	},
 	data(props) {
 		let myQuote = props.quote;
 		const myQuoteInfo = {
@@ -26,20 +36,39 @@ export default defineComponent({
 			e.preventDefault();
 			console.log("[handleClickView]", this.myQuoteInfo);
 		},
-		handleClickDelete: async function (e: Event) {
+	},
+
+	setup(props) {
+		async function handleClickDelete(e: Event) {
 			e.preventDefault();
 			console.log("[handleClickDelete]");
 
 			const endpoint = `${serverURL}/quote`;
 			console.log("[saveQuoteData ]");
 			try {
-				const quoteId = this.myQuoteInfo.id;
+				const quoteId = props.quote.id;
 				const { data } = await axios.delete(endpoint, { data: { id: quoteId } });
 				console.log("delete Executed", data);
-			} catch (error) {
-				console.error(error);
+
+				// this.getQuotesData();
+				props.getQuotesData?.(e);
+
+				Swal.fire({
+					title: "Quote deleted",
+					text: "Quote was successfully deleted",
+					icon: "success",
+				});
+			} catch (error: any) {
+				// console.error(error);
+				Swal.fire({
+					title: "Quote not deleted deleted",
+					text: error,
+					icon: "error",
+				});
 			}
-		},
+		}
+
+		return { handleClickDelete };
 	},
 });
 </script>
