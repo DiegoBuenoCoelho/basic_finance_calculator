@@ -62,6 +62,7 @@ export default defineComponent({
 							max="1000000"
 							class="input is-small"
 							pattern="([0-9]{1,3}).([0-9]{1,3})"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-dollar-sign"></i>
@@ -80,6 +81,7 @@ export default defineComponent({
 							min="0"
 							max="1000000"
 							class="input is-small"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-dollar-sign"></i>
@@ -98,6 +100,7 @@ export default defineComponent({
 							class="input is-small"
 							min="0"
 							max="1000000"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-dollar-sign"></i>
@@ -117,6 +120,7 @@ export default defineComponent({
 							max="100000"
 							placeholder="months"
 							class="input is-small"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-calendar-alt"></i>
@@ -135,6 +139,7 @@ export default defineComponent({
 							min="0"
 							max="100000"
 							class="input is-small"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-percentage"></i>
@@ -153,6 +158,7 @@ export default defineComponent({
 							min="0"
 							max="100000"
 							class="input is-small"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-dollar-sign"></i>
@@ -171,6 +177,7 @@ export default defineComponent({
 							min="0"
 							max="100000"
 							class="input is-small"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 						<span class="icon is-left">
 							<i class="fas fa-percentage"></i>
@@ -191,6 +198,7 @@ export default defineComponent({
 					<button
 						class="button is-black is-small"
 						@click="onApply"
+						:disabled="Boolean(formInqQuote.id)"
 					>
 						<span class="icon is-small">
 							<i class="fas fa-check"></i>

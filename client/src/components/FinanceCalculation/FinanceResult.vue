@@ -117,6 +117,7 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							class="input is-small quoteName"
 							placeholder="Quote name"
+							:disabled="Boolean(formInqQuote.id)"
 						/>
 					</div>
 				</div>
@@ -124,6 +125,7 @@ export default defineComponent({
 					<button
 						class="button is-black is-small"
 						@click="onSave"
+						:disabled="Boolean(formInqQuote.id)"
 					>
 						<span class="icon is-small">
 							<i class="fas fa-save"></i>
