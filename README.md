@@ -55,4 +55,31 @@ This project should take a few hours, not days. Focus on demonstrating your skil
 -   The start of coding
 -   Using standard scss for general layout
 -   Adding Server folder (NodeJS, TS, Express)
--   Splitting the git repository into /client and /server
+-   Splitting the git repository into ./client and ./server
+
+### FRONT END
+
+-   cd client/
+-   npm run start
+-   VueJS with TypeScript
+-   Some libraries installed / added:
+    -   Axios
+    -   Bulma (css)
+    -   FontAwesome
+    -   Swal2 (sweetAlert2)
+
+### BACK END
+
+-   cd server/
+-   npm run start
+-   Database: SQLLite3. I would create it in Postgres, but I didn'tt have an instance available at the momento to create the schema/table.
+-   Some libraries installed / added:
+
+    -   Express
+    -   Cors (so we can make requests from different instances)
+    -   knex (to connect to the DB)
+    -   nanoid (to generate random IDs)
+    -   better-sqlite3 (SQLLite3)
+
+-   To clear the DB and restart again with 2 entries:
+    -   node src/db/databaseDML.ts
