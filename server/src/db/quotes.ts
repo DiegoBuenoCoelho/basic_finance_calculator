@@ -53,19 +53,11 @@ export async function deleteQuote(quoteId: number | bigint | null) {
 	return quote;
 }
 
-export async function updateQuote({
-	quoteId,
-	title,
-	description,
-	companyId,
-}: {
-	quoteId: number | bigint | null;
-}) {
-	const quote = await getQuoteTable().first().where({ id: quoteId });
+export async function updateQuote(theQuote: QuoteComplete) {
+	const quote = await getQuoteTable().first().where({ id: theQuote.id });
 	if (!quote) {
-		throw new Error(`Quote not found by Id: ${quoteId}`);
+		throw new Error(`Quote not found by Id: ${theQuote.id}`);
 	}
-	const updatedFields = { title, description };
-	await getQuoteTable().update(updatedFields).where({ id: quoteId });
-	return { ...quote, ...updatedFields };
+	await getQuoteTable().update(theQuote).where({ id: theQuote.id });
+	return { ...theQuote };
 }
