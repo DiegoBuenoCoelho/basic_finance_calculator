@@ -1,8 +1,9 @@
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import "./FinanceQuote.scss";
 import "../../assets/scss/panel.scss";
 import { Quote } from "@/types/Quote";
+import { formatCurrency } from "@/utils/formatters";
 
 export default defineComponent({
 	name: "FinanceQuote",
@@ -21,11 +22,15 @@ export default defineComponent({
 		},
 	},
 	data(props) {
-		// formInqQuote = props.formInqQuote;
-		// return { formInqQuote };
-		return {};
+		let sellingPrice = computed(() => {
+			console.log(this.formInqQuote.inq_cost + this.formInqQuote.inq_profit);
+			const valueFormatted = formatCurrency(
+				this.formInqQuote.inq_cost + this.formInqQuote.inq_profit
+			);
+			return valueFormatted;
+		});
+		return { sellingPrice };
 	},
-	methods: {},
 });
 </script>
 
@@ -47,7 +52,7 @@ export default defineComponent({
 							:value="formInqQuote.inq_cost"
 							@change="handleFormDataChange"
 							min="0"
-							max="100000"
+							max="1000000"
 							class="input is-small"
 						/>
 					</div>
@@ -62,7 +67,7 @@ export default defineComponent({
 							:value="formInqQuote.inq_profit"
 							@change="handleFormDataChange"
 							min="0"
-							max="100000"
+							max="1000000"
 							class="input is-small"
 						/>
 					</div>
@@ -76,9 +81,9 @@ export default defineComponent({
 							name="inq_sellingprice"
 							:value="formInqQuote.inq_sellingprice"
 							@change="handleFormDataChange"
-							min="0"
-							max="100000"
 							class="input is-small"
+							min="0"
+							max="1000000"
 						/>
 					</div>
 				</div>

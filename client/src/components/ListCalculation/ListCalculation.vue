@@ -40,6 +40,19 @@ export default defineComponent({
 				console.error(error);
 			}
 		},
+		// onDelete: async function (myQuote: Quote) {
+		// 	console.log("[handleClickDelete]");
+
+		// 	const endpoint = `${serverURL}/quote`;
+		// 	console.log("[saveQuoteData ]");
+		// 	try {
+		// 		const quoteId = myQuote.id;
+		// 		const { data } = await axios.delete(endpoint, { data: { id: quoteId } });
+		// 		console.log("delete Executed", data);
+		// 	} catch (error) {
+		// 		console.error(error);
+		// 	}
+		// },
 	},
 	mounted() {
 		this.getQuotesData();

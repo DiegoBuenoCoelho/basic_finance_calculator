@@ -62,6 +62,10 @@
 						&.quoteName {
 							width: 80%;
 						}
+
+						&.disabled {
+							border-color: white;
+						}
 					}
 					span {
 						padding-right: 0.25em;

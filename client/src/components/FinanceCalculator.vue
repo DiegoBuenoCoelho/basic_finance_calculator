@@ -39,7 +39,7 @@ export default defineComponent({
 		class="FinanceCalculator"
 		:class="{}"
 	>
-		<FinanceCalculation />
+		<FinanceCalculation :updateListSavedQuotes="updateListSavedQuotes" />
 		<ListCalculation
 			ref="childRef"
 			:onClickViewQuote="(e: any) => onClickViewQuote(e as Quote)"

@@ -2,6 +2,7 @@ import { QuoteInput } from "./QuoteInput";
 import { QuoteResult } from "./QuoteResult";
 
 export interface Quote {
+	id: string | null;
 	inq_cost: number;
 	inq_profit: number;
 	inq_sellingprice: number;

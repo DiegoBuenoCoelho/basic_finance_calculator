@@ -14,3 +14,17 @@ export function formatDate({
 	}
 	return "";
 }
+
+export function formatCurrency(myValue: number) {
+	// console.log("[formatCurrency]", { myValue });
+	try {
+		if (Number(myValue))
+			return myValue.toLocaleString("en-US", {
+				style: "currency",
+				currency: "USD",
+			});
+		return 0;
+	} catch {
+		return 0;
+	}
+}

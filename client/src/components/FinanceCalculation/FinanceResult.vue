@@ -6,7 +6,6 @@ import { Quote } from "@/types/Quote";
 export default defineComponent({
 	name: "FinanceResult",
 	props: {
-		// formInqQuote: Object as PropType<Quote>,
 		formInqQuote: {
 			type: Object as PropType<Quote>,
 			required: true,
@@ -35,41 +34,71 @@ export default defineComponent({
 				<div class="quoteFields">
 					<div class="property">Taxes:</div>
 					<div class="value">
-						<span>${{ formInqQuote.res_taxes.toFixed(2) }}</span>
+						<span
+							>{{
+								formInqQuote.res_taxes.toLocaleString("en-US", {
+									style: "currency",
+									currency: "USD",
+								})
+							}}
+							({{ formInqQuote.inq_taxrate.toFixed(2) }} %)</span
+						>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Base Loan Amount:</div>
 					<div class="value">
-						<span>${{ formInqQuote.res_baseloanamount.toFixed(2) }}</span>
+						<span>{{
+							formInqQuote.res_baseloanamount.toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})
+						}}</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Interest:</div>
 					<div class="value">
-						<span>${{ formInqQuote.res_interest.toFixed(2) }}</span>
+						<span>{{
+							formInqQuote.res_interest.toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})
+						}}</span>
 					</div>
 				</div>
 				<div class="quoteFields">
-					<div class="property">Monthly Payment:</div>
+					<div class="property">Total Loan Amount:</div>
 					<div class="value">
-						<span>${{ formInqQuote.res_monthlypayment.toFixed(2) }}</span>
+						<span>{{
+							formInqQuote.res_totalloanamount.toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})
+						}}</span>
 					</div>
 				</div>
 				<div class="quoteFields">
-					<div class="property has-text-weight-semibold">Total Loan Amount:</div>
+					<div class="property has-text-weight-semibold">Monthly Payment:</div>
 					<div class="value">
-						<span class="has-text-weight-semibold"
-							>${{ formInqQuote.res_totalloanamount.toFixed(2) }}</span
-						>
+						<span class="has-text-weight-semibold">{{
+							formInqQuote.res_monthlypayment.toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})
+						}}</span>
 					</div>
 				</div>
+
 				<div class="quoteFields">
 					<div class="property has-text-weight-semibold">Out Of Pocket:</div>
 					<div class="value">
-						<span class="has-text-weight-semibold"
-							>${{ formInqQuote.res_outofpocket.toFixed(2) }}</span
-						>
+						<span class="has-text-weight-semibold">{{
+							formInqQuote.res_outofpocket.toLocaleString("en-US", {
+								style: "currency",
+								currency: "USD",
+							})
+						}}</span>
 					</div>
 				</div>
 
