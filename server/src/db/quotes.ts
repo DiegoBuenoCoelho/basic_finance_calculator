@@ -15,7 +15,7 @@ export const getCountQuotes = async (): Promise<number> => {
 
 export async function getQuotes(limit: number | bigint | null, offset: number | bigint | null) {
 	console.log("[getQuotes] ", { limit, offset });
-	const query = getQuoteTable().select().orderBy("id", "desc");
+	const query = getQuoteTable().select().orderBy("inq_timestamp", "desc");
 	if (limit != null) {
 		query.limit(Number(limit));
 	}
