@@ -90,6 +90,10 @@
 				padding-top: 0.25em;
 				padding-right: 1em;
 
+				&.saveQuote {
+					justify-content: flex-end;
+				}
+
 				button {
 					width: 7em;
 					padding-left: 2em;

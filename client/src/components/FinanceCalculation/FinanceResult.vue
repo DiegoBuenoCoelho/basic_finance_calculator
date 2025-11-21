@@ -120,7 +120,7 @@ export default defineComponent({
 						/>
 					</div>
 				</div>
-				<div class="buttonArea">
+				<div class="buttonArea saveQuote">
 					<button
 						class="button is-black is-small"
 						@click="onSave"
