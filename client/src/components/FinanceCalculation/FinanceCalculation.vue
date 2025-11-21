@@ -4,6 +4,8 @@ import "./FinanceCalculation.scss";
 import FinanceQuote from "./FinanceQuote.vue";
 import FinanceResult from "./FinanceResult.vue";
 import { Quote } from "@/types/Quote";
+import { serverURL } from "@/config";
+import axios from "axios";
 
 export default defineComponent({
 	name: "FinanceCalculation",
@@ -52,13 +54,32 @@ export default defineComponent({
 				};
 			}
 
-			console.log("state object: ", this.formInqQuote);
+			// console.log("state object: ", this.formInqQuote);
 		},
-		onApply() {
-			console.log("[onApply]");
+
+		onApply(e: Event) {
+			e.preventDefault();
+			console.log("[onApply]", this.formInqQuote);
 		},
-		onSave() {
-			console.log("[onSave]");
+		onSave(e: Event) {
+			e.preventDefault();
+			console.log("[onSave]", this.formInqQuote);
+			this.saveQuoteData();
+			this.reloadSavedQuotes();
+		},
+		saveQuoteData: async function () {
+			const endpoint = `${serverURL}/quote`;
+			console.log("[saveQuoteData ]");
+			try {
+				const thisQuote = this.formInqQuote;
+				const { data } = await axios.put(endpoint, { data: thisQuote });
+				console.log("put Executed", data);
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		reloadSavedQuotes() {
+			console.log("[reloadSavedQuotes]");
 		},
 	},
 });

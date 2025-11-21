@@ -4,6 +4,8 @@ body {
 	margin: 0em;
 	padding: 0em;
 	background-color: #f4f4f5;
+	min-height: 100%;
+	padding-bottom: 2em;
 
 	#app {
 		font-family: Calibri, Avenir, Helvetica, Arial, sans-serif;
@@ -13,5 +15,6 @@ body {
 
 		margin: 0em;
 		padding: 0em;
+		padding-bottom: 2em;
 	}
 }

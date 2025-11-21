@@ -3,6 +3,8 @@ import { computed, defineComponent, ref } from "vue";
 import "./SavedQuote.scss";
 import { Quote } from "@/types/Quote";
 import { formatDate } from "@/utils/formatters";
+import { serverURL } from "@/config";
+import axios from "axios";
 
 export default defineComponent({
 	name: "SavedQuote",
@@ -19,13 +21,22 @@ export default defineComponent({
 			e.preventDefault();
 			console.log("[handleClickView]", this.myQuote);
 		},
-		handleClickDelete(e: Event) {
+		handleClickDelete: async function (e: Event) {
 			e.preventDefault();
 			console.log("[handleClickDelete]");
+
+			const endpoint = `${serverURL}/quote`;
+			console.log("[saveQuoteData ]");
+			try {
+				const quoteId = this.myQuote.id;
+				const { data } = await axios.delete(endpoint, { data: { id: quoteId } });
+				console.log("delete Executed", data);
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
 });
-// defineProps(["quote"]);
 </script>
 
 <template>

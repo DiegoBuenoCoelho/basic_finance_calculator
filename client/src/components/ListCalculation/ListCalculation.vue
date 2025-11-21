@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import "./ListCalculation.scss";
 import "../../assets/scss/panel.scss";
 import { serverURL } from "@/config";
@@ -12,11 +12,20 @@ export default defineComponent({
 	components: {
 		SavedQuote,
 	},
-	props: {},
+	props: {
+		// boReload: {
+		// 	type: Boolean,
+		// 	required: true,
+		// },
+		onClickViewQuote: {
+			type: Function as PropType<(e: Event) => void>,
+			required: true,
+		},
+	},
 	data() {
 		const endpoint = `${serverURL}/quotes`;
-		// let arQuotes: Array<Quote> = ref([]);
 		let arQuotes = ref([]);
+
 		return { endpoint, arQuotes };
 	},
 	methods: {
@@ -44,12 +53,23 @@ export default defineComponent({
 		:class="{}"
 	>
 		<div class="panel">
-			<div class="title">Saved Quotes</div>
+			<div
+				class="title"
+				@click="getQuotesData"
+			>
+				Saved Quotes
+				<span class="reloadButton">
+					<span class="icon is-small">
+						<i class="icon-refresh"></i>
+					</span>
+				</span>
+			</div>
 			<div class="content savedQuotes">
 				<SavedQuote
 					v-for="(quote, index) in arQuotes"
 					:key="index"
 					:quote="quote"
+					:onClickViewQuote="onClickViewQuote"
 				/>
 			</div>
 		</div>
