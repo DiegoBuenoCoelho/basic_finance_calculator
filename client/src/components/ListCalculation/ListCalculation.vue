@@ -17,12 +17,16 @@ export default defineComponent({
 			type: Array as PropType<Quote[]>,
 			required: true,
 		},
-		onClickViewQuote: {
-			type: Function as PropType<(thisQuote: Quote) => void>,
-			required: true,
-		},
+		// onClickViewQuote: {
+		// 	type: Function as PropType<(thisQuote: Quote) => void>,
+		// 	required: true,
+		// },
 		getQuotesData: {
 			type: Function as PropType<(e: Event) => void>,
+			required: true,
+		},
+		viewSavedQuote: {
+			type: Function as PropType<(quote: Quote) => void>,
 			required: true,
 		},
 	},
@@ -51,7 +55,7 @@ export default defineComponent({
 					v-for="(quote, index) in arQuotes"
 					:key="index"
 					:quote="quote"
-					:onClickViewQuote="onClickViewQuote"
+					:viewSavedQuote="viewSavedQuote"
 					:getQuotesData="getQuotesData"
 				/>
 			</div>

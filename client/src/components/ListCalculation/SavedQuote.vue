@@ -19,6 +19,10 @@ export default defineComponent({
 			type: Function as PropType<(e: Event) => void>,
 			required: true,
 		},
+		viewSavedQuote: {
+			type: Function as PropType<(quote: Quote) => void>,
+			required: true,
+		},
 	},
 	data(props) {
 		let myQuote = props.quote;
@@ -35,6 +39,8 @@ export default defineComponent({
 		handleClickView(e: Event) {
 			e.preventDefault();
 			console.log("[handleClickView]", this.myQuoteInfo);
+
+			this.viewSavedQuote(this.myQuoteInfo);
 		},
 	},
 

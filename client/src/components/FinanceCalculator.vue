@@ -17,7 +17,8 @@ export default defineComponent({
 	data() {
 		const endpoint = `${serverURL}`;
 		let arQuotes = ref([]);
-		return { endpoint, arQuotes };
+		let quoteToView = ref<Quote | undefined>();
+		return { endpoint, arQuotes, quoteToView };
 	},
 
 	methods: {
@@ -48,11 +49,14 @@ export default defineComponent({
 		class="FinanceCalculator"
 		:class="{}"
 	>
-		<FinanceCalculation :getQuotesData="getQuotesData" />
+		<FinanceCalculation
+			:getQuotesData="getQuotesData"
+			:quoteToView="quoteToView"
+		/>
 		<ListCalculation
 			:arQuotes="arQuotes"
 			:getQuotesData="getQuotesData"
-			:onClickViewQuote="onClickViewQuote"
+			:viewSavedQuote="onClickViewQuote"
 		/>
 	</div>
 </template>

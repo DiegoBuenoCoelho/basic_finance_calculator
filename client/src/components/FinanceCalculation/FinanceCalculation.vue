@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType, defineEmits, ref, getCurrentInstance } from "vue";
+import { defineComponent, PropType, defineEmits, ref, getCurrentInstance, computed } from "vue";
 import "./FinanceCalculation.scss";
 import FinanceQuote from "./FinanceQuote.vue";
 import FinanceResult from "./FinanceResult.vue";
@@ -15,13 +15,19 @@ export default defineComponent({
 		FinanceResult,
 	},
 	props: {
+		quoteToView: {
+			type: Object as PropType<Quote | undefined>,
+			required: true,
+		},
 		getQuotesData: {
 			type: Function as PropType<(e?: Event) => void>,
 			required: true,
 		},
 	},
-	data() {
-		let formInqQuote: Quote = {
+	data(props) {
+		const quoteToView = this.quoteToView;
+		console.log("[FinanceCalculation]", { quoteToView });
+		let formInqQuote: Quote | undefined = this.$props.quoteToView || {
 			id: null,
 			inq_cost: 0.0,
 			inq_profit: 0,
@@ -39,7 +45,6 @@ export default defineComponent({
 			res_outofpocket: 0,
 			res_quotename: "",
 		};
-
 		return { formInqQuote };
 	},
 
@@ -50,6 +55,7 @@ export default defineComponent({
 			const thisProperty = target.name;
 			const thisValue = target.value;
 			console.log(target.name, target.value);
+
 			switch (thisProperty) {
 				case "inq_cost":
 					this.formInqQuote = {
@@ -130,6 +136,7 @@ export default defineComponent({
 	},
 	setup(props, ctx) {
 		const inst = getCurrentInstance();
+		const proxy = inst?.proxy as any;
 
 		function restoreFormInput() {
 			if (inst && (inst as any).data) {
@@ -159,7 +166,6 @@ export default defineComponent({
 			console.log("[onSave]", (inst as any)?.data?.formInqQuote);
 
 			try {
-				const proxy = inst?.proxy as any;
 				if (proxy && typeof proxy.validateForm === "function") {
 					proxy.validateForm();
 				}
@@ -193,8 +199,13 @@ export default defineComponent({
 			console.log("[saveQuoteData ]");
 			try {
 				const thisQuote = inst ? (inst as any).data.formInqQuote : null;
-				const { data } = await axios.post(endpoint, { data: thisQuote });
-				console.log("put Executed", data);
+				if (thisQuote.id) {
+					const { data } = await axios.put(endpoint, { data: thisQuote });
+					console.log("put Executed", data);
+				} else {
+					const { data } = await axios.post(endpoint, { data: thisQuote });
+					console.log("post Executed", data);
+				}
 
 				Swal.fire({
 					title: "Quote saved",
@@ -209,11 +220,18 @@ export default defineComponent({
 			}
 		}
 
+		function checkProps() {
+			if (props?.quoteToView) {
+				console.log("AIAIA", props?.quoteToView);
+			}
+		}
+
 		// expose functions to the template / component instance
 		return {
 			onSave,
 			saveQuoteData,
 			restoreFormInput,
+			checkProps,
 		};
 	},
 });
@@ -226,11 +244,13 @@ export default defineComponent({
 	>
 		<FinanceQuote
 			:formInqQuote="formInqQuote"
+			:quoteToView="quoteToView"
 			:handleFormDataChange="handleFormDataChange"
 			:onApply="onApply"
 		/>
 		<FinanceResult
 			:formInqQuote="formInqQuote"
+			:quoteToView="quoteToView"
 			:handleFormDataChange="handleFormDataChange"
 			:onSave="onSave"
 		/>

@@ -12,6 +12,10 @@ export default defineComponent({
 			type: Object as PropType<Quote>,
 			required: true,
 		},
+		quoteToView: {
+			type: Object as PropType<Quote | undefined>,
+			required: false,
+		},
 		handleFormDataChange: {
 			type: Function as PropType<(e: Event) => void>,
 			required: false,

@@ -10,6 +10,10 @@ export default defineComponent({
 			type: Object as PropType<Quote>,
 			required: true,
 		},
+		quoteToView: {
+			type: Object as PropType<Quote | undefined>,
+			required: false,
+		},
 		handleFormDataChange: {
 			type: Function as PropType<(e: Event) => void>,
 			required: false,
@@ -20,6 +24,10 @@ export default defineComponent({
 		},
 	},
 	methods: {},
+	data(props) {
+		// const obQuote = this.quoteToView ? this.quoteToView : this.formInqQuote;
+		// return { obQuote };
+	},
 });
 </script>
 
