@@ -2,7 +2,7 @@ import { QuoteComplete } from "../interfaces";
 
 const BLQuote = () => {
 	const calcQuote = (currentQuote: QuoteComplete) => {
-		console.log("[calcQuote]", { currentQuote });
+		// console.log("[calcQuote]", { currentQuote });
 
 		const valueToTax = currentQuote.inq_sellingprice;
 		const tax = currentQuote.inq_taxrate / 100;
