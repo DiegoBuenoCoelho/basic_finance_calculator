@@ -57,6 +57,8 @@ This project should take a few hours, not days. Focus on demonstrating your skil
 -   Adding Server folder (NodeJS, TS, Express)
 -   Splitting the git repository into ./client and ./server
 
+![screenshot251120](https://github.com/user-attachments/assets/f303dc58-903b-49d3-b355-4e323b43c304)
+
 ### FRONT END
 
 -   cd client/
