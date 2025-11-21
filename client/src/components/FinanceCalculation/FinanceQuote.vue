@@ -54,6 +54,7 @@ export default defineComponent({
 							min="0"
 							max="1000000"
 							class="input is-small"
+							pattern="([0-9]{1,3}).([0-9]{1,3})"
 						/>
 					</div>
 				</div>

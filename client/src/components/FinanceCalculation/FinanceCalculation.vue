@@ -6,6 +6,7 @@ import FinanceResult from "./FinanceResult.vue";
 import { Quote } from "@/types/Quote";
 import { serverURL } from "@/config";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default defineComponent({
 	name: "FinanceCalculation",
@@ -133,12 +134,56 @@ export default defineComponent({
 			}
 		},
 
+		validateForm() {
+			let field = null;
+			const thiQuote = this.formInqQuote;
+			if (thiQuote.inq_cost === 0) {
+				field = "inq_cost";
+			}
+			if (thiQuote.inq_rate === 0) {
+				field = "inq_rate";
+			}
+			if (thiQuote.inq_sellingprice === 0) {
+				field = "inq_sellingprice";
+			}
+			if (thiQuote.inq_taxrate === 0) {
+				field = "inq_taxrate";
+			}
+			if (thiQuote.res_quotename === "") {
+				field = "res_quotename";
+			}
+
+			if (field) {
+				throw Error(`FORM|Invalid value for field [${field}]`);
+			}
+		},
+
 		onSave(e: Event) {
 			e.preventDefault();
 			console.log("[onSave]", this.formInqQuote);
-			this.saveQuoteData();
-			if (typeof (this as any).reloadSavedQuotes === "function") {
-				(this as any).reloadSavedQuotes();
+
+			try {
+				this.validateForm();
+				this.saveQuoteData();
+				if (typeof (this as any).reloadSavedQuotes === "function") {
+					(this as any).reloadSavedQuotes();
+				}
+			} catch (error: any) {
+				const errorType = error.message?.split("|")[0];
+				const errorMessage = error.message?.split("|")[1];
+				if (errorType === "FORM") {
+					Swal.fire({
+						title: "It was not possible to save",
+						text: `${errorMessage}`,
+						icon: "warning",
+					});
+				} else {
+					Swal.fire({
+						title: "It was not possible to save",
+						html: `Sorry, something happend in our end.<br> Please, try it again later.`,
+						icon: "error",
+					});
+				}
 			}
 		},
 
@@ -149,6 +194,12 @@ export default defineComponent({
 				const thisQuote = this.formInqQuote;
 				const { data } = await axios.post(endpoint, { data: thisQuote });
 				console.log("put Executed", data);
+
+				Swal.fire({
+					title: "Quote saved",
+					text: "Quote was successfully saved",
+					icon: "success",
+				});
 
 				this.updateValue();
 				this.restoreFormInput();
