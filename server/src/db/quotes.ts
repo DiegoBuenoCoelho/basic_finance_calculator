@@ -1,5 +1,6 @@
 import useConnection from "./useConnection";
 import useGenerateIds from "../utils/useGenerateIds";
+import { QuoteComplete } from "../interfaces";
 
 const { connection } = useConnection();
 const getQuoteTable = () => connection.table("quote");
@@ -30,17 +31,17 @@ export async function getQuoteById(id: number | bigint | null) {
 	return await getQuoteTable().first().where({ id });
 }
 
-export async function createQuote({ title, description }: { title: string; description: string }) {
+export async function createQuote(newQuote: QuoteComplete) {
 	const newId = obGenerateId.generateId();
-	console.log("[createQuote] ==>", { newId, title, description });
-	const quote = {
+	console.log("[createQuote] ==>", { newId, newQuote });
+	const finalQuote = {
+		...newQuote,
 		id: newId,
-		title,
-		description,
-		createdAt: new Date().toISOString(),
+		inq_timestamp: new Date().toISOString(),
 	};
-	await getQuoteTable().insert(quote);
-	return quote;
+	console.log({ finalQuote });
+	await getQuoteTable().insert(finalQuote);
+	return finalQuote;
 }
 
 export async function deleteQuote(quoteId: number | bigint | null) {
