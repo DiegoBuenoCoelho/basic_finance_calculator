@@ -30,6 +30,7 @@ export default defineComponent({
 			...myQuote,
 			myMonthlyPayment: formatCurrency(myQuote.res_monthlypayment),
 			myOutOfPocke: formatCurrency(myQuote.res_outofpocket),
+			myTotalAmount: formatCurrency(myQuote.res_totalloanamount),
 			myDate: props.quote.inq_timestamp,
 		};
 
@@ -86,15 +87,23 @@ export default defineComponent({
 	>
 		<div class="savedQuoteData">
 			<div class="quoteName">
+				{{ quote.res_quotename }}
 				<span class="dateCreated"
 					>{{ myQuoteInfo.myDate.split("T")[0] }}
 					{{ myQuoteInfo.myDate.split("T")[1].substr(0, 8) }}</span
 				>
-				{{ quote.res_quotename }}
 			</div>
 			<div class="quoteInfos">
 				<div class="quoteItem">
-					<div class="quoteItemName">Payment</div>
+					<div class="quoteItemName">Total Loan Amount</div>
+					<div class="quoteItemValue">{{ myQuoteInfo.myTotalAmount }}</div>
+				</div>
+				<div class="quoteItem">
+					<div class="quoteItemName">Terms in Months</div>
+					<div class="quoteItemValue">{{ myQuoteInfo.inq_term }}</div>
+				</div>
+				<div class="quoteItem">
+					<div class="quoteItemName">Monthly Payment</div>
 					<div class="quoteItemValue">
 						{{ myQuoteInfo.myMonthlyPayment }}
 					</div>

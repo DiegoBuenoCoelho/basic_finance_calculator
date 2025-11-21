@@ -12,11 +12,11 @@ export default defineComponent({
 			type: Object as PropType<Quote>,
 			required: true,
 		},
-		quoteToView: {
-			type: Object as PropType<Quote | undefined>,
+		handleFormDataChange: {
+			type: Function as PropType<(e: Event) => void>,
 			required: false,
 		},
-		handleFormDataChange: {
+		restoreFormInput: {
 			type: Function as PropType<(e: Event) => void>,
 			required: false,
 		},
@@ -27,7 +27,10 @@ export default defineComponent({
 	},
 	data(props) {
 		let sellingPrice = computed(() => {
-			console.log(this.formInqQuote.inq_cost + this.formInqQuote.inq_profit);
+			console.log(
+				"[sellingPrice]",
+				this.formInqQuote.inq_cost + this.formInqQuote.inq_profit
+			);
 			const valueFormatted = formatCurrency(
 				this.formInqQuote.inq_cost + this.formInqQuote.inq_profit
 			);
@@ -48,7 +51,7 @@ export default defineComponent({
 			<div class="content quoteFieldsArea">
 				<div class="quoteFields">
 					<div class="property">Cost:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_cost"
@@ -60,11 +63,14 @@ export default defineComponent({
 							class="input is-small"
 							pattern="([0-9]{1,3}).([0-9]{1,3})"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-dollar-sign"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Profit:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_profit"
@@ -75,11 +81,14 @@ export default defineComponent({
 							max="1000000"
 							class="input is-small"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-dollar-sign"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Selling Price:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_sellingprice"
@@ -90,11 +99,14 @@ export default defineComponent({
 							min="0"
 							max="1000000"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-dollar-sign"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
-					<div class="property">Term:</div>
-					<div class="value">
+					<div class="property">Term (in months):</div>
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="int_term"
@@ -103,13 +115,17 @@ export default defineComponent({
 							@change="handleFormDataChange"
 							min="0"
 							max="100000"
+							placeholder="months"
 							class="input is-small"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-calendar-alt"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Rate:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_rate"
@@ -120,11 +136,14 @@ export default defineComponent({
 							max="100000"
 							class="input is-small"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-percentage"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Out Of Pocket:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_outofpocket"
@@ -135,11 +154,14 @@ export default defineComponent({
 							max="100000"
 							class="input is-small"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-dollar-sign"></i>
+						</span>
 					</div>
 				</div>
 				<div class="quoteFields">
 					<div class="property">Tax Rate:</div>
-					<div class="value">
+					<div class="value control has-icons-left has-icons-right">
 						<input
 							type="number"
 							id="inq_taxrate"
@@ -150,9 +172,22 @@ export default defineComponent({
 							max="100000"
 							class="input is-small"
 						/>
+						<span class="icon is-left">
+							<i class="fas fa-percentage"></i>
+						</span>
 					</div>
 				</div>
 				<div class="buttonArea">
+					<button
+						class="button is-info is-small newQuote"
+						@click="restoreFormInput"
+					>
+						<span class="icon is-small">
+							<i class="far fa-file"></i>
+						</span>
+						Start New Quote
+					</button>
+
 					<button
 						class="button is-black is-small"
 						@click="onApply"

@@ -17,7 +17,7 @@ export default defineComponent({
 	data() {
 		const endpoint = `${serverURL}`;
 		let arQuotes = ref([]);
-		let quoteToView = ref<Quote | undefined>();
+		let quoteToView = ref<Quote | undefined | null>();
 		return { endpoint, arQuotes, quoteToView };
 	},
 
@@ -36,6 +36,14 @@ export default defineComponent({
 
 		onClickViewQuote(thisQuote: Quote) {
 			console.log("[onClickViewQuote]");
+			this.quoteToView = thisQuote;
+		},
+
+		clearQuoteToView: function (e: Event | undefined) {
+			if (e && typeof e.preventDefault === "function") {
+				e.preventDefault();
+			}
+			this.quoteToView = null;
 		},
 	},
 	mounted() {
@@ -52,6 +60,7 @@ export default defineComponent({
 		<FinanceCalculation
 			:getQuotesData="getQuotesData"
 			:quoteToView="quoteToView"
+			:clearQuoteToView="clearQuoteToView"
 		/>
 		<ListCalculation
 			:arQuotes="arQuotes"

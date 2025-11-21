@@ -16,10 +16,14 @@ export default defineComponent({
 	},
 	props: {
 		quoteToView: {
-			type: Object as PropType<Quote | undefined>,
+			type: Object as PropType<Quote | null | undefined>,
 			required: true,
 		},
 		getQuotesData: {
+			type: Function as PropType<(e?: Event) => void>,
+			required: true,
+		},
+		clearQuoteToView: {
 			type: Function as PropType<(e?: Event) => void>,
 			required: true,
 		},
@@ -91,6 +95,7 @@ export default defineComponent({
 					};
 					break;
 			}
+			// console.log("EEE", this.formInqQuote);
 		},
 
 		async onApply(e: Event) {
@@ -138,6 +143,8 @@ export default defineComponent({
 		const inst = getCurrentInstance();
 		const proxy = inst?.proxy as any;
 
+		console.warn("setup", props.quoteToView);
+
 		function restoreFormInput() {
 			if (inst && (inst as any).data) {
 				(inst as any).data.formInqQuote = {
@@ -159,6 +166,8 @@ export default defineComponent({
 					res_quotename: "",
 				};
 			}
+
+			props.clearQuoteToView();
 		}
 
 		function onSave(e: Event) {
@@ -243,14 +252,13 @@ export default defineComponent({
 		:class="{}"
 	>
 		<FinanceQuote
-			:formInqQuote="formInqQuote"
-			:quoteToView="quoteToView"
+			:formInqQuote="quoteToView || formInqQuote"
 			:handleFormDataChange="handleFormDataChange"
+			:restoreFormInput="restoreFormInput"
 			:onApply="onApply"
 		/>
 		<FinanceResult
-			:formInqQuote="formInqQuote"
-			:quoteToView="quoteToView"
+			:formInqQuote="quoteToView || formInqQuote"
 			:handleFormDataChange="handleFormDataChange"
 			:onSave="onSave"
 		/>
